@@ -13,7 +13,7 @@ export default function Contact({ setActiveSection }) {
 
         try {
             setStatus('sending');
-            await axios.post('http://localhost:8000/api/contact/', formData);
+            await axios.post(`${import.meta.env.VITE_API_URL}/api/contact/`, formData);
             alert(`Thank you ${formData.name}! Your message has been received.`);
             setFormData({ name: '', email: '', message: '' });
             setStatus('success');
