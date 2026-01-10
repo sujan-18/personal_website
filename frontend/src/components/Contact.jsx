@@ -82,14 +82,7 @@ export default function Contact({ setActiveSection }) {
                     </div>
                 </div>
 
-                <div className="text-center mt-8">
-                    <button
-                        onClick={() => setActiveSection('home')}
-                        className="px-6 py-3 border-2 border-purple-500 rounded-full font-semibold hover:bg-purple-500/20 transition-all transform hover:scale-105 inline-flex items-center gap-2"
-                    >
-                        ← Back to Home
-                    </button>
-                </div>
+
             </div>
         </section>
     );

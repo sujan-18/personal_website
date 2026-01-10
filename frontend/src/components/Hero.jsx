@@ -4,6 +4,7 @@ import axios from 'axios';
 
 export default function Hero({ setActiveSection }) {
     const [cvUrl, setCvUrl] = useState(null);
+    const [imageError, setImageError] = useState(false);
 
     useEffect(() => {
         const fetchCv = async () => {
@@ -34,9 +35,18 @@ export default function Hero({ setActiveSection }) {
                 <div className="relative inline-block mb-8 group">
                     <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full blur-2xl opacity-50 group-hover:opacity-75 transition-opacity duration-300"></div>
                     <div className="relative w-48 h-48 mx-auto rounded-full overflow-hidden border-4 border-purple-500 transform group-hover:scale-110 transition-transform duration-300">
-                        <div className="w-full h-full bg-gradient-to-br from-purple-600 to-pink-600 flex items-center justify-center text-6xl font-bold">
-                            SS
-                        </div>
+                        {!imageError ? (
+                            <img
+                                src="/my_profile.png"
+                                alt="Sujan Shrestha"
+                                className="w-full h-full object-cover"
+                                onError={() => setImageError(true)}
+                            />
+                        ) : (
+                            <div className="w-full h-full bg-gradient-to-br from-purple-600 to-pink-600 flex items-center justify-center text-6xl font-bold">
+                                SS
+                            </div>
+                        )}
                     </div>
                 </div>
 
