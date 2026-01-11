@@ -5,7 +5,7 @@ export default function About() {
     const skills = [
         { icon: Code, name: 'Frontend', items: ['React', 'Vue', 'TypeScript', 'Tailwind CSS'] },
         { icon: Zap, name: 'Backend', items: ['Node.js', 'Python', 'Express', 'FastAPI'] },
-        { icon: Palette, name: 'Other', items: ['MongoDB', 'PostgreSQL', 'AWS', 'Docker'] }
+        { icon: Palette, name: 'Other', items: ['MongoDB', 'PostgreSQL'] }
     ];
 
     return (
@@ -17,8 +17,13 @@ export default function About() {
 
                 <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 mb-12 border border-purple-500/20">
                     <p className="text-lg text-gray-300 leading-relaxed mb-6">
-                        I'm a passionate full-stack developer with over 5 years of experience building scalable web applications.
-                        I specialize in creating elegant solutions to complex problems, with a focus on user experience and performance.
+                        It's me sujan shrestha, interested in technology and programming.
+
+                        I am learning Python, Django, HTML, CSS, Tailwind CSS, and JavaScript step by step. I enjoy building small projects like websites, mobile apps, management systems, and interactive web pages. I am especially interested in backend development, full-stack projects, and databases.
+
+                        I like to learn things in a simple and practical way, and I always try to understand concepts deeply rather than just memorizing them. My goal is to improve my skills and work in a big IT company in the future.
+
+                        I am hardworking, curious, and always ready to learn new technologies.
                     </p>
                     <p className="text-lg text-gray-300 leading-relaxed">
                         When I'm not coding, you'll find me exploring new technologies, contributing to open-source projects,

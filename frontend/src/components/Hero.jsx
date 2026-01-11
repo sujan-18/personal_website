@@ -3,7 +3,7 @@ import { Download, Github, Linkedin, Mail } from 'lucide-react';
 import axios from 'axios';
 
 export default function Hero({ setActiveSection }) {
-    const [cvUrl, setCvUrl] = useState(null);
+    const [cvUrl, setCvUrl] = useState('/Sujan_CV.pdf');
     const [imageError, setImageError] = useState(false);
 
     useEffect(() => {
@@ -15,7 +15,7 @@ export default function Hero({ setActiveSection }) {
                     setCvUrl(res.data[0].file);
                 }
             } catch (error) {
-                console.error("No active CV found");
+                console.error("No active CV found, using local fallback");
             }
         };
         fetchCv();
@@ -25,7 +25,8 @@ export default function Hero({ setActiveSection }) {
         if (cvUrl) {
             window.open(cvUrl, '_blank');
         } else {
-            alert("No CV is currently available for download. Please contact me directly!");
+            // This should rarely happen now that we have a default state
+            window.open('/Sujan_CV.pdf', '_blank');
         }
     };
 
@@ -85,13 +86,13 @@ export default function Hero({ setActiveSection }) {
                 </div>
 
                 <div className="flex justify-center gap-6 mt-12">
-                    <a href="#" className="text-gray-400 hover:text-purple-400 transition-colors transform hover:scale-110">
+                    <a href="https://github.com/sujan-18/" className="text-gray-400 hover:text-purple-400 transition-colors transform hover:scale-110">
                         <Github size={28} />
                     </a>
-                    <a href="#" className="text-gray-400 hover:text-purple-400 transition-colors transform hover:scale-110">
+                    <a href="https://www.linkedin.com/in/sujan-shrestha-841753359/" className="text-gray-400 hover:text-purple-400 transition-colors transform hover:scale-110">
                         <Linkedin size={28} />
                     </a>
-                    <a href="#" className="text-gray-400 hover:text-purple-400 transition-colors transform hover:scale-110">
+                    <a href="mailto:newarsujan2323@gmail.com" className="text-gray-400 hover:text-purple-400 transition-colors transform hover:scale-110">
                         <Mail size={28} />
                     </a>
                 </div>

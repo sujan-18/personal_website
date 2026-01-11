@@ -101,7 +101,7 @@ export default function Chatbot() {
             console.error("Chat error", error);
             const errorResponse = {
                 type: 'bot',
-                text: "Sorry, I'm having trouble connecting to my brain right now."
+                text: "Hello, I am Malla, Sujan's assistant. Currently, we are not connected to the backend, and this service will be updated soon."
             };
             setChatMessages(prev => [...prev, errorResponse]);
         }
