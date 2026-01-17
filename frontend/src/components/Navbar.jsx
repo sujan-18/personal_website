@@ -25,6 +25,14 @@ export default function Navbar({ activeSection, setActiveSection }) {
                                 {section}
                             </button>
                         ))}
+                        <a
+                            href="/admin/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-gray-300 hover:text-purple-300 capitalize transition-all"
+                        >
+                            Admin
+                        </a>
                     </div>
 
                     <button
@@ -36,22 +44,24 @@ export default function Navbar({ activeSection, setActiveSection }) {
                 </div>
             </div>
 
-            {menuOpen && (
-                <div className="md:hidden bg-slate-800 border-t border-purple-500/20">
-                    {['home', 'about', 'projects', 'contact'].map(section => (
-                        <button
-                            key={section}
-                            onClick={() => {
-                                setActiveSection(section);
-                                setMenuOpen(false);
-                            }}
-                            className="block w-full text-left px-4 py-3 capitalize hover:bg-slate-700 transition-colors"
-                        >
-                            {section}
-                        </button>
-                    ))}
-                </div>
-            )}
-        </nav>
+            {
+                menuOpen && (
+                    <div className="md:hidden bg-slate-800 border-t border-purple-500/20">
+                        {['home', 'about', 'projects', 'contact'].map(section => (
+                            <button
+                                key={section}
+                                onClick={() => {
+                                    setActiveSection(section);
+                                    setMenuOpen(false);
+                                }}
+                                className="block w-full text-left px-4 py-3 capitalize hover:bg-slate-700 transition-colors"
+                            >
+                                {section}
+                            </button>
+                        ))}
+                    </div>
+                )
+            }
+        </nav >
     );
 }
