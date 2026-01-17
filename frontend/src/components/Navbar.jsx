@@ -25,14 +25,6 @@ export default function Navbar({ activeSection, setActiveSection }) {
                                 {section}
                             </button>
                         ))}
-                        <a
-                            href="/admin/"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-gray-300 hover:text-purple-300 capitalize transition-all"
-                        >
-                            Admin
-                        </a>
                     </div>
 
                     <button
