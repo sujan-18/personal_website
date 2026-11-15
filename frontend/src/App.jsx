@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import heroImage from './images/hero.png';
+import wideAngleImage from './images/wideangle.png';
 import adventureImage1 from './images/image1.png';
 import adventureImage2 from './images/image2.png';
 import adventureImage3 from './images/image3.png';
@@ -25,5 +26,69 @@ function Hero({ onNavigate }) {
 }
 function Adventures(){return <section className="section adventures" id="adventures"><div className="page-shell"><div className="section-title-row reveal"><div><p className="eyebrow"><span/> My Adventures</p><h2>Journeys That Inspire</h2><p className="section-intro">From towering peaks to peaceful rivers — a journal waiting for its stories.</p></div><a className="button button--outline" href="#contact">Share a trail <ArrowRight size={14}/></a></div><div className="adventure-grid">{[{image:adventureImage1,alt:"Trekker beneath snow-capped Himalayan peaks",title:"Beneath the high peaks"},{image:adventureImage2,alt:"Trekker taking in a mountain trail",title:"A trail-side pause"},{image:adventureImage3,alt:"Mountain panorama above the trail",title:"Mountain panorama",className:"adventure-card--panorama"},{image:adventureImage4,alt:"Resting among forest trees on a hike",title:"Forest rest stop"},{image:adventureImage5,alt:"Trekker looking across a mountain valley",title:"The open valley"}].map((adventure,i)=><article className={"adventure-card adventure-card--"+(i+1)+(adventure.className?" "+adventure.className:"")+" reveal"} key={adventure.title}><div className="adventure-art"><img className="adventure-art__photo" src={adventure.image} alt={adventure.alt} loading="lazy" decoding="async"/><span className="adventure-art__index">0{i+1}</span><span className="adventure-art__label">{adventure.title}</span></div></article>)}</div></div></section>}
 function TechStack(){const tools=[['Py','Python'],['JS','JavaScript'],['⚛','React'],['⚡','FastAPI'],['5','HTML & CSS'],['≋','Tailwind'],['DB','PostgreSQL'],['GH','GitHub'],['RAG','RAG'],['⌘','Git']];return <section className="section stack" id="stack"><div className="page-shell stack__inner"><div className="stack__heading reveal"><p className="eyebrow"><span/> Tech Stack</p><h2>Tools I Work With</h2><p className="section-intro">A growing toolkit for turning ideas into useful things.</p></div><ul className="stack-list">{tools.map(([mark,name],i)=><li className="reveal" key={name}><span className={`stack-icon stack-icon--${i}`}>{mark}</span><small>{name}</small></li>)}</ul></div></section>}
-function Closing({onNavigate}){return <section className="closing page-shell" aria-labelledby="closing-title"><Landscape className="closing__landscape"/><div className="closing__shade"/><div className="closing__content reveal"><span className="closing__quote-mark">“</span><div><h2 id="closing-title">The best views come after the hardest climbs.</h2><p>— Sujan Shrestha</p></div><a className="button button--outline" href="#contact" onClick={()=>onNavigate('contact')}>Let’s Connect <ArrowRight size={14}/></a></div></section>}
-export default function App(){const[active,setActive]=useState('home');useEffect(()=>{const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)setActive(e.target.id)}),{rootMargin:'-35% 0px -55% 0px'});links.forEach(([id])=>{const el=document.getElementById(id);if(el)observer.observe(el)});return()=>observer.disconnect()},[]);useEffect(()=>{const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('is-visible');observer.unobserve(e.target)}}),{threshold:.12});const observeNew=()=>document.querySelectorAll('.reveal:not(.is-visible)').forEach(el=>observer.observe(el));observeNew();const mutation=new MutationObserver(observeNew);mutation.observe(document.querySelector('main'),{childList:true,subtree:true});return()=>{observer.disconnect();mutation.disconnect()}},[]);const navigate=id=>document.getElementById(id)?.scrollIntoView({behavior:'smooth'});return <><Navbar active={active} onNavigate={navigate}/><main><Hero onNavigate={navigate}/><About/><Adventures/><Projects/><TechStack/><Closing onNavigate={navigate}/><Contact/></main><Footer onNavigate={navigate}/></>}
+function Closing({onNavigate}){return <section className="closing page-shell" aria-labelledby="closing-title"><img className="closing__image" src={wideAngleImage} alt="" aria-hidden="true" loading="lazy" decoding="async"/><div className="closing__shade"/><div className="closing__content reveal"><span className="closing__quote-mark">“</span><div><h2 id="closing-title">The best views come after the hardest climbs.</h2><p>— Sujan Shrestha</p></div><a className="button button--outline" href="#contact" onClick={()=>onNavigate('contact')}>Let’s Connect <ArrowRight size={14}/></a></div></section>}
+export default function App() {
+  const [active, setActive] = useState('home');
+
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => entries.forEach((entry) => {
+      if (entry.isIntersecting) setActive(entry.target.id);
+    }), { rootMargin: '-35% 0px -55% 0px' });
+    links.forEach(([id]) => {
+      const section = document.getElementById(id);
+      if (section) observer.observe(section);
+    });
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    }), { threshold: 0.12 });
+    const observeNew = () => document.querySelectorAll('.reveal:not(.is-visible)').forEach((node) => observer.observe(node));
+    observeNew();
+    const mutation = new MutationObserver(observeNew);
+    mutation.observe(document.querySelector('main'), { childList: true, subtree: true });
+    return () => { observer.disconnect(); mutation.disconnect(); };
+  }, []);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    const hero = document.getElementById('home');
+    let frame = 0;
+    const updateMotion = () => {
+      if (frame) return;
+      frame = requestAnimationFrame(() => {
+        const scrollRange = root.scrollHeight - window.innerHeight;
+        const progress = scrollRange > 0 ? (window.scrollY / scrollRange) * 100 : 0;
+        root.style.setProperty('--scroll-progress', `${progress}%`);
+        if (hero && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          const offset = Math.min(window.scrollY, hero.offsetHeight) * 0.08;
+          hero.style.setProperty('--hero-parallax', `${offset}px`);
+        } else {
+          hero?.style.removeProperty('--hero-parallax');
+        }
+        frame = 0;
+      });
+    };
+    window.addEventListener('scroll', updateMotion, { passive: true });
+    window.addEventListener('resize', updateMotion, { passive: true });
+    updateMotion();
+    return () => {
+      window.removeEventListener('scroll', updateMotion);
+      window.removeEventListener('resize', updateMotion);
+      if (frame) cancelAnimationFrame(frame);
+    };
+  }, []);
+
+  const navigate = (id) => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+  return <>
+    <div className="scroll-progress" aria-hidden="true"><span /></div>
+    <Navbar active={active} onNavigate={navigate} />
+    <main><Hero onNavigate={navigate} /><About /><Adventures /><Projects /><TechStack /><Closing onNavigate={navigate} /><Contact /></main>
+    <Footer onNavigate={navigate} />
+  </>;
+}
