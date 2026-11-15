@@ -1,60 +1,38 @@
-import React from 'react';
-import { Code, Zap, Palette } from 'lucide-react';
+import { createElement } from 'react';
+import { BookOpen, Code2, Leaf, Mountain } from 'lucide-react';
+import profileImage from '../images/profile.png';
+
+const identities = [
+  { icon: Code2, title: 'Developer', line: 'Build. Innovate. Repeat.' },
+  { icon: Mountain, title: 'Trekker', line: 'Explore. Discover. Live.' },
+  { icon: Leaf, title: 'Nature Lover', line: 'Breathe. Appreciate.' },
+  { icon: BookOpen, title: 'Lifelong Learner', line: 'Always Keep Growing.' },
+];
 
 export default function About() {
-    const skills = [
-        { icon: Code, name: 'Frontend', items: ['React', 'Vue', 'TypeScript', 'Tailwind CSS'] },
-        { icon: Zap, name: 'Backend', items: ['Node.js', 'Python', 'Express', 'FastAPI'] },
-        { icon: Palette, name: 'Other', items: ['MongoDB', 'PostgreSQL'] }
-    ];
-
-    return (
-        <section className="min-h-screen py-20 px-4">
-            <div className="max-w-4xl mx-auto">
-                <h2 className="text-4xl sm:text-5xl font-bold mb-12 text-center bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-                    About Me
-                </h2>
-
-                <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 mb-12 border border-purple-500/20">
-                    <p className="text-lg text-gray-300 leading-relaxed mb-6">
-                        It's me sujan shrestha, interested in technology and programming.
-
-                        I am learning Python, Django, HTML, CSS, Tailwind CSS, and JavaScript step by step. I enjoy building small projects like websites, mobile apps, management systems, and interactive web pages. I am especially interested in backend development, full-stack projects, and databases.
-
-                        I like to learn things in a simple and practical way, and I always try to understand concepts deeply rather than just memorizing them. My goal is to improve my skills and work in a big IT company in the future.
-
-                        I am hardworking, curious, and always ready to learn new technologies.
-                    </p>
-                    <p className="text-lg text-gray-300 leading-relaxed">
-                        When I'm not coding, you'll find me exploring new technologies, contributing to open-source projects,
-                        or sharing knowledge with the developer community through blog posts and talks.
-                    </p>
-                </div>
-
-                <h3 className="text-3xl font-bold mb-8 text-center">Skills & Technologies</h3>
-
-                <div className="grid md:grid-cols-3 gap-6">
-                    {skills.map((skill, idx) => (
-                        <div
-                            key={idx}
-                            className="bg-slate-800/50 backdrop-blur-sm rounded-xl p-6 border border-purple-500/20 hover:border-purple-500/50 transition-all transform hover:scale-105"
-                        >
-                            <div className="flex items-center gap-3 mb-4">
-                                <skill.icon className="text-purple-400" size={28} />
-                                <h4 className="text-xl font-semibold">{skill.name}</h4>
-                            </div>
-                            <ul className="space-y-2">
-                                {skill.items.map((item, i) => (
-                                    <li key={i} className="text-gray-400 flex items-center gap-2">
-                                        <span className="w-2 h-2 bg-purple-500 rounded-full"></span>
-                                        {item}
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                    ))}
-                </div>
-            </div>
-        </section>
-    );
+  return <section className="section about" id="about">
+    <div className="page-shell about__grid">
+      <div className="about__photo reveal">
+        <div className="photo-placeholder">
+          <div className="photo-placeholder__frame">
+            <img className="about__portrait" src={profileImage} alt="Sujan Shrestha" loading="lazy" decoding="async" width="1024" height="1536" />
+          </div>
+        </div>
+      </div>
+      <div className="about__copy reveal">
+        <p className="eyebrow"><span /> About Me</p>
+        <h2>Two Worlds,<br /><em>One Passion.</em></h2>
+        <p>I’m a software developer with an explorer’s mindset. I love turning ideas into functional digital experiences, just as much as I enjoy discovering new places, walking mountain trails, and experiencing the beauty of nature.</p>
+        <a className="button button--outline" href="#projects">Learn More <ArrowRightIcon /></a>
+      </div>
+      <div className="about__identities reveal">
+        {identities.map(({ icon, title, line }) => <div className="identity-row" key={title}>
+          {createElement(icon, { size: 25 })}
+          <div><h3>{title}</h3><p>{line}</p></div>
+        </div>)}
+      </div>
+    </div>
+  </section>;
 }
+
+function ArrowRightIcon() { return <span aria-hidden="true">→</span>; }

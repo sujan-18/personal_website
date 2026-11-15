@@ -1,28 +1,29 @@
-import React, { useState } from 'react';
-import Navbar from './components/Navbar';
-import Hero from './components/Hero';
+import { useEffect, useState } from 'react';
+import heroImage from './images/hero.png';
+import adventureImage1 from './images/image1.png';
+import adventureImage2 from './images/image2.png';
+import adventureImage3 from './images/image3.png';
+import adventureImage4 from './images/image4.png';
+import adventureImage5 from './images/image5.png';
+import { ArrowDown, ArrowRight, ArrowUpRight, FileText, Github, Linkedin, Menu, Moon, Mountain, Sun, X } from 'lucide-react';
 import About from './components/About';
 import Projects from './components/Projects';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
-import Chatbot from './components/Chatbot';
 
-export default function App() {
-  const [activeSection, setActiveSection] = useState('home');
-
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white font-sans">
-      <Navbar activeSection={activeSection} setActiveSection={setActiveSection} />
-
-      <main className="pt-16">
-        {activeSection === 'home' && <Hero setActiveSection={setActiveSection} />}
-        {activeSection === 'about' && <About />}
-        {activeSection === 'projects' && <Projects />}
-        {activeSection === 'contact' && <Contact setActiveSection={setActiveSection} />}
-      </main>
-
-      <Footer setActiveSection={setActiveSection} />
-      <Chatbot />
-    </div>
-  );
+const links = [['home','Home'],['about','About'],['adventures','Adventures'],['projects','Projects'],['stack','Tech Stack'],['contact','Contact']];
+function Landscape({ className = '' }) { return <div className={`landscape ${className}`} aria-hidden="true"><div className="landscape__stars"/><div className="landscape__sun"/><div className="landscape__ridge landscape__ridge--far"/><div className="landscape__ridge landscape__ridge--mid"/><div className="landscape__ridge landscape__ridge--near"/></div>; }
+function Brand(){return <a className="brand" href="#home" aria-label="Sujan Shrestha home"><span className="brand__icon"><Mountain size={29}/><i/></span><span>Sujan <b>Shrestha</b></span></a>}
+function Navbar({ active, onNavigate }) {
+ const [open,setOpen]=useState(false),[light,setLight]=useState(false);const go=id=>{onNavigate(id);setOpen(false)};
+ useEffect(()=>{document.documentElement.dataset.theme=light?'light':'dark';},[light]);
+ return <header className="site-header"><Brand/><button className="menu-toggle" aria-label={open?'Close navigation':'Open navigation'} aria-expanded={open} onClick={()=>setOpen(!open)}>{open?<X/>:<Menu/>}</button><nav className={`navigation${open?' navigation--open':''}`} aria-label="Main navigation">{links.map(([id,label])=><a key={id} href={`#${id}`} className={active===id?'is-active':''} onClick={()=>go(id)}>{label}</a>)}</nav><button className="theme-toggle" onClick={()=>setLight(!light)} aria-label={`Switch to ${light?'dark':'light'} theme`}>{light?<Moon size={14}/>:<Sun size={14}/>}<span>{light?<Sun size={13}/>:<Moon size={13}/>}</span></button></header>;
 }
+function Hero({ onNavigate }) {
+ const cvUrl="/Sujan_CV.pdf";
+ return <section className="hero" id="home" aria-labelledby="hero-title"><img className="hero__image" src={heroImage} alt="" aria-hidden="true" fetchPriority="high"/><div className="hero__shade"/><div className="hero__content page-shell"><p className="eyebrow hero__hello reveal">Hello, I’m <span/></p><h1 className="hero__title reveal" id="hero-title">Sujan <em>Shrestha</em></h1><p className="hero__manifesto reveal">I Build with <em>Code.</em><br/>I Explore with <em>Curiosity.</em></p><p className="hero__roles reveal">Software Developer <i/> Trekker <i/> Nature Enthusiast</p><p className="hero__note reveal">Somewhere between writing code and finding new trails,<br className="desktop-break"/> I find my inspiration.</p><div className="hero__actions reveal"><a className="button button--outline" href="#adventures" onClick={()=>onNavigate('adventures')}><ArrowUpRight size={15}/> Explore My Journey</a><a className="hero__resume" href={cvUrl} target="_blank" rel="noreferrer" aria-label="Open résumé PDF in a new tab"><span className="hero__resume-icon"><FileText size={16}/></span><span className="hero__resume-copy"><strong>View résumé</strong><small>PDF · opens in a new tab</small></span><ArrowUpRight className="hero__resume-arrow" size={15}/></a></div></div><a className="scroll-cue" href="#about" aria-label="Scroll down"><span className="scroll-cue__mouse"/><span>Scroll Down</span><ArrowDown size={13}/></a><p className="hero__script">Beyond<br/>the Code</p></section>;
+}
+function Adventures(){return <section className="section adventures" id="adventures"><div className="page-shell"><div className="section-title-row reveal"><div><p className="eyebrow"><span/> My Adventures</p><h2>Journeys That Inspire</h2><p className="section-intro">From towering peaks to peaceful rivers — a journal waiting for its stories.</p></div><a className="button button--outline" href="#contact">Share a trail <ArrowRight size={14}/></a></div><div className="adventure-grid">{[{image:adventureImage1,alt:"Trekker beneath snow-capped Himalayan peaks",title:"Beneath the high peaks"},{image:adventureImage2,alt:"Trekker taking in a mountain trail",title:"A trail-side pause"},{image:adventureImage3,alt:"Mountain panorama above the trail",title:"Mountain panorama",className:"adventure-card--panorama"},{image:adventureImage4,alt:"Resting among forest trees on a hike",title:"Forest rest stop"},{image:adventureImage5,alt:"Trekker looking across a mountain valley",title:"The open valley"}].map((adventure,i)=><article className={"adventure-card adventure-card--"+(i+1)+(adventure.className?" "+adventure.className:"")+" reveal"} key={adventure.title}><div className="adventure-art"><img className="adventure-art__photo" src={adventure.image} alt={adventure.alt} loading="lazy" decoding="async"/><span className="adventure-art__index">0{i+1}</span><span className="adventure-art__label">{adventure.title}</span></div></article>)}</div></div></section>}
+function TechStack(){const tools=[['Py','Python'],['JS','JavaScript'],['⚛','React'],['⚡','FastAPI'],['5','HTML & CSS'],['≋','Tailwind'],['DB','PostgreSQL'],['GH','GitHub'],['RAG','RAG'],['⌘','Git']];return <section className="section stack" id="stack"><div className="page-shell stack__inner"><div className="stack__heading reveal"><p className="eyebrow"><span/> Tech Stack</p><h2>Tools I Work With</h2><p className="section-intro">A growing toolkit for turning ideas into useful things.</p></div><ul className="stack-list">{tools.map(([mark,name],i)=><li className="reveal" key={name}><span className={`stack-icon stack-icon--${i}`}>{mark}</span><small>{name}</small></li>)}</ul></div></section>}
+function Closing({onNavigate}){return <section className="closing page-shell" aria-labelledby="closing-title"><Landscape className="closing__landscape"/><div className="closing__shade"/><div className="closing__content reveal"><span className="closing__quote-mark">“</span><div><h2 id="closing-title">The best views come after the hardest climbs.</h2><p>— Sujan Shrestha</p></div><a className="button button--outline" href="#contact" onClick={()=>onNavigate('contact')}>Let’s Connect <ArrowRight size={14}/></a></div></section>}
+export default function App(){const[active,setActive]=useState('home');useEffect(()=>{const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)setActive(e.target.id)}),{rootMargin:'-35% 0px -55% 0px'});links.forEach(([id])=>{const el=document.getElementById(id);if(el)observer.observe(el)});return()=>observer.disconnect()},[]);useEffect(()=>{const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('is-visible');observer.unobserve(e.target)}}),{threshold:.12});const observeNew=()=>document.querySelectorAll('.reveal:not(.is-visible)').forEach(el=>observer.observe(el));observeNew();const mutation=new MutationObserver(observeNew);mutation.observe(document.querySelector('main'),{childList:true,subtree:true});return()=>{observer.disconnect();mutation.disconnect()}},[]);const navigate=id=>document.getElementById(id)?.scrollIntoView({behavior:'smooth'});return <><Navbar active={active} onNavigate={navigate}/><main><Hero onNavigate={navigate}/><About/><Adventures/><Projects/><TechStack/><Closing onNavigate={navigate}/><Contact/></main><Footer onNavigate={navigate}/></>}

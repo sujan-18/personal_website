@@ -1,84 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { Code, ExternalLink } from 'lucide-react';
-import axios from 'axios';
+import { ArrowRight, ArrowUpRight } from 'lucide-react';
+import { projects } from '../data/projects';
 
 export default function Projects() {
-    const [projects, setProjects] = useState([]);
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        const fetchProjects = async () => {
-            try {
-                const res = await axios.get('http://localhost:8000/api/projects/');
-                setProjects(res.data);
-            } catch (error) {
-                console.error("Failed to fetch projects", error);
-                // Fallback or empty state
-            } finally {
-                setLoading(false);
-            }
-        };
-        fetchProjects();
-    }, []);
-
-    if (loading) {
-        return <div className="text-center py-20 text-white">Loading incredible projects...</div>;
-    }
-
-    return (
-        <section className="min-h-screen py-20 px-4">
-            <div className="max-w-6xl mx-auto">
-                <h2 className="text-4xl sm:text-5xl font-bold mb-12 text-center bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-                    Featured Projects
-                </h2>
-
-                {projects.length === 0 ? (
-                    <div className="text-center text-gray-400">No projects added yet from the secret backend headquarters.</div>
-                ) : (
-                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {projects.map((project, idx) => (
-                            <div
-                                key={idx}
-                                className="bg-slate-800/50 backdrop-blur-sm rounded-xl overflow-hidden border border-purple-500/20 hover:border-purple-500/50 transition-all transform hover:scale-105 hover:shadow-xl hover:shadow-purple-500/20"
-                            >
-                                <div className="h-48 bg-gradient-to-br from-purple-600 to-pink-600 flex items-center justify-center relative overflow-hidden">
-                                    {project.image ? (
-                                        <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
-                                    ) : (
-                                        <Code size={64} className="text-white opacity-50" />
-                                    )}
-                                </div>
-                                <div className="p-6">
-                                    <h3 className="text-2xl font-bold mb-3">{project.title}</h3>
-                                    <p className="text-gray-400 mb-4">{project.description}</p>
-
-                                    <div className="flex flex-wrap gap-2 mb-4">
-                                        {project.tech_stack.split(',').map((tech, i) => (
-                                            <span
-                                                key={i}
-                                                className="px-3 py-1 bg-purple-900/50 rounded-full text-sm text-purple-300 border border-purple-500/30"
-                                            >
-                                                {tech.trim()}
-                                            </span>
-                                        ))}
-                                    </div>
-
-                                    {project.link && (
-                                        <a
-                                            href={project.link}
-                                            target="_blank"
-                                            rel="noreferrer"
-                                            className="inline-flex items-center gap-2 text-purple-400 hover:text-purple-300 transition-colors font-semibold"
-                                        >
-                                            View Project <ExternalLink size={16} />
-                                        </a>
-                                    )}
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                )}
-            </div>
-        </section>
-    );
+  return <section className="section projects" id="projects"><div className="page-shell">
+    <div className="projects__heading reveal"><div><p className="eyebrow"><span/> My Projects</p><h2>Turning Ideas into Reality</h2><p className="section-intro">A collection of projects where I turn creative ideas<br className="desktop-break"/> into functional, user-friendly solutions.</p><a className="button button--outline" href="#projects-list">Explore All Projects <ArrowRight size={14}/></a></div>
+      <div className="project-visual" aria-hidden="true"><div className="project-window project-window--code"><div className="project-window__top"><i/><i/><i/></div><div className="code-lines"><b/><b/><b/><b/><b/><b/><b/><b/></div></div><div className="project-window project-window--site"><div className="project-window__top"><i/><i/><i/></div><div className="project-site__hero"/><div className="project-site__rows"><i/><i/><i/></div></div><div className="project-phone"><div className="project-phone__notch"/><div className="project-site__hero"/><div className="project-site__rows"><i/><i/></div></div><span className="project-visual__badge">&lt;/&gt;</span></div>
+    </div>
+    <div className="project-list" id="projects-list">{projects.map((project,i)=><article className="project-card reveal" key={project.title}><span className="project-card__number">0{i+1}</span><a className="project-card__thumb" href={project.href} target="_blank" rel="noreferrer" aria-label={`Open ${project.title}`}><img src={project.image} alt={`${project.title} screenshot`} loading="lazy"/></a><div><h3>{project.title}</h3><p className="project-card__description">{project.description}</p><div className="project-card__tags">{project.techStack.map(tech=><span key={tech}>{tech}</span>)}</div></div><a className="project-card__link" href={project.href} target="_blank" rel="noreferrer">{project.linkLabel || "View project"} <ArrowUpRight size={14}/></a></article>)}</div>
+  </div></section>;
 }
