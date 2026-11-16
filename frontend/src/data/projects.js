@@ -1,4 +1,8 @@
-﻿import applyWiseImage from '../images/project1.png';
+import applyWiseImage from '../images/project1.png';
+import portfolioImage from '../images/projectpic1.png';
+import galleryImage from '../images/projectpic2.png';
+import projectIdeasImage from '../images/projectpic3.png';
+import projectLibreImage from '../images/projectpic4.png';
 
 export const projects = [
   {
@@ -8,6 +12,8 @@ export const projects = [
     href: 'https://github.com/sujan-18/ApplyWise/',
     linkLabel: 'View on GitHub',
     image: applyWiseImage,
+    // Add imported screenshots here to create more overlapping image cards.
+    galleryImages: [{ src: applyWiseImage, alt: 'ApplyWise application screenshot' }],
   },
   {
     title: 'Portfolio',
@@ -15,7 +21,8 @@ export const projects = [
     techStack: ['HTML', 'CSS'],
     href: 'https://sujan-18.github.io/My_portfolio_website/',
     linkLabel: 'View live project',
-    image: '/assets/images/projects/portfolio.png',
+    image: portfolioImage,
+    galleryImages: [{ src: portfolioImage, alt: 'Project planning workspace' }, { src: galleryImage, alt: 'Team collaboration around a project' }],
   },
   {
     title: 'Gallery',
@@ -23,6 +30,7 @@ export const projects = [
     techStack: ['HTML', 'CSS', 'JavaScript'],
     href: 'https://sujan-18.github.io/my_galary/',
     linkLabel: 'View live project',
-    image: '/assets/images/projects/gallery.png',
+    image: galleryImage,
+    galleryImages: [{ src: projectIdeasImage, alt: 'Creative project ideas' }, { src: projectLibreImage, alt: 'ProjectLibre AI Copilot project planning interface' }],
   },
 ];
